@@ -154,7 +154,11 @@ pub mod multisig_impl {
             .iter()
             .map(|acc| {
                 if &acc.pubkey == ctx.accounts.multisig_signer.key {
-                    AccountMeta::new_readonly(acc.pubkey, true)
+                    AccountMeta {
+                        is_signer: true,
+                        is_writable: acc.is_writable,
+                        pubkey: acc.pubkey,
+                    }
                 } else {
                     acc.clone()
                 }
